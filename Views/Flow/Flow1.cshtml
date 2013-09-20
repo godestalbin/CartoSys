@@ -1,0 +1,54 @@
+﻿@using MindFusion.Diagramming;
+@using MindFusion.Diagramming.Mvc
+
+@{
+    ViewBag.Title = "Flow1";
+}
+
+
+@using (Html.BeginForm("Flow1","Flow",FormMethod.Get)){     
+         <p>Application: @Html.DropDownList("SourceId", ViewBag.applicationList as SelectList, "Select..." ) 
+         </p> 
+        } 
+
+@Html.DiagramView((DiagramView)ViewBag.DiagramView)
+
+<script>
+    $(document).ready(function () {
+        $("#SourceId").change(function () {
+            $(this).closest("form").submit();
+        });
+    });
+
+    function pageLoad(sender, args)
+    {
+        var diagram = $find('diagramView1');
+        diagram.get_element().addEventListener("mousemove", Function.createDelegate(diagram, onDiagramMouseMove), false);
+        currLink = null;
+    }
+
+    function onDiagramMouseMove(e)
+    {
+        if (currLink) {
+            currLink.setShadowColor(null);
+            currLink.setStrokeThickness(1);
+        }
+        var cursor = MindFusion.Diagramming.Utils.getCursorPos(e, this.get_element());
+        var point = this.clientToDoc(cursor);
+        var link = this.getLinkAt(point, true, true);
+        if (link)
+        {
+            currLink = link;
+            //alert(currLink.getPen());
+            //currLink.setShadowColor('#0000FF');
+            currLink.setShadowColor(currLink.getPen());
+            currLink.setStrokeThickness(2);
+        }
+        this.invalidate();
+    }
+
+    function onLinkClicked(sender, args) {
+        window.open(args.getLink().getHyperLink(), "LinkEdit", "menubar=no, status=no, scrollbars=no, menubar=no, width=1000, height=800");
+    }
+    
+</script>

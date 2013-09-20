@@ -1,0 +1,86 @@
+﻿@using MindFusion.Diagramming
+@using MindFusion.Diagramming.Mvc
+@using System.Drawing
+
+@{
+
+    if (!IsPost)
+    {
+        DiagramView view = new DiagramView("diagramView1");
+
+        Diagram diagram = view.Diagram;
+        diagram.Bounds = new RectangleF(0, 0, 50, 50);
+        //diagram.MeasureUnit = MeasureUnit.WpfPoint;
+        
+        ShapeNode node1 = new ShapeNode(diagram);
+        node1.Bounds = new RectangleF(50, 7, 100, 18);
+        node1.Text = "Start";
+        node1.Locked = true;
+        diagram.Nodes.Add(node1);
+
+        ShapeNode node2 = new ShapeNode(diagram);
+        node2.Bounds = new RectangleF(50, 75, 100, 18);
+        node2.Text = "End";
+        node2.Locked = true;
+        diagram.Nodes.Add(node2);
+
+        for (var i = 0; i < 10; i++)
+        {
+            DiagramLink link = new DiagramLink(diagram, node1, node2);
+            var p1 = link.ControlPoints[0];
+            var p2 = link.ControlPoints[link.ControlPoints.Count - 1];
+            var v = (i <= 5) ? -i * 2 : (i - 5) * 2;
+            p1.X += v;
+            p2.X += v;
+            link.ControlPoints[0] = p1;
+            link.ControlPoints[link.ControlPoints.Count - 1] = p2;
+            link.HyperLink = "http://www.google.com";
+            diagram.Links.Add(link);
+        }
+ 
+        view.LinkClickedScript("onLinkClicked");
+        diagram.LinkHitDistance = 0.1f;
+        ViewBag.DiagramView = view;
+    }
+    else
+    {
+        ViewBag.DiagramView = DiagramView.FromRequest("diagramView1", Request);
+    }
+
+}
+
+
+@Html.DiagramView(((DiagramView)ViewBag.DiagramView).SetHeight(500).SetWidth(700).LinkClickedScript("onLinkClicked"))
+
+
+<script type="text/javascript">
+    function pageLoad(sender, args)
+    {
+        var diagram = $find('diagramView1');
+        diagram.get_element().addEventListener("mousemove", Function.createDelegate(diagram, onDiagramMouseMove), false);
+        currLink = null;
+    }
+
+    function onDiagramMouseMove(e)
+    {
+        if (currLink) {
+            currLink.setShadowColor(null);
+            currLink.setStrokeThickness(1);
+        }
+        var cursor = MindFusion.Diagramming.Utils.getCursorPos(e, this.get_element());
+        var point = this.clientToDoc(cursor);
+        var link = this.getLinkAt(point, true, true);
+        if (link)
+        {
+            currLink = link;
+            currLink.setShadowColor('#000000');
+            currLink.setStrokeThickness(2);
+        }
+        this.invalidate();
+    }
+
+    function onLinkClicked(sender, args) {
+        document.location = args.getLink().getHyperLink();
+    }
+
+</script>

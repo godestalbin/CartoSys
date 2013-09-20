@@ -1,0 +1,64 @@
+﻿@model CartoSys.Models.Flow
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Flow</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SourceId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SourceId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TargetId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TargetId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FlowType)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FlowType)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SendingMode)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SendingMode)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Code)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Code)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

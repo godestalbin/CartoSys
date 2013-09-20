@@ -1,0 +1,57 @@
+﻿@model CartoSys.Models.Applications
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Applications</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Alias)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Alias)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Domain)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Domain)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.InChargeBu)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InChargeBu)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.InChargeAdeo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InChargeAdeo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Documentation)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Documentation)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
