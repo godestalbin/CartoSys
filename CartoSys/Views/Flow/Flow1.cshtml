@@ -35,7 +35,7 @@
         }
         var cursor = MindFusion.Diagramming.Utils.getCursorPos(e, this.get_element());
         var point = this.clientToDoc(cursor);
-        var link = this.getLinkAt(point, true, true);
+        var link = this.getLinkAt(point, true, false);
         if (link)
         {
             currLink = link;
