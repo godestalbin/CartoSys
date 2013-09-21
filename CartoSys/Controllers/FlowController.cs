@@ -248,6 +248,9 @@ namespace CartoSys.Controllers
 
                 link.HyperLink = "http://www.google.com";
 
+                //Do not allow link to be selected
+                link.Locked = true;
+
                 //Test for dotted line
                 //link.Brush = new MindFusion.Drawing.HatchBrush(System.Drawing.Drawing2D.HatchStyle.ZigZag, Color.Yellow, Color.Red);
                 //link.Brush = new MindFusion.Drawing.HatchBrush(MindFusion.Drawing.HatchStyle.ZigZag, Color.Yellow, Color.Red);
@@ -268,6 +271,8 @@ namespace CartoSys.Controllers
                 //Set link color
                 link.Pen = new MindFusion.Drawing.Pen(ColorLink(application.FlowType));
                 link.HyperLink = "http://www.google.com";
+                //Do not allow link to be selected
+                //link.Locked = true;
             }
 
 
