@@ -308,12 +308,12 @@ namespace CartoSys.Controllers
         /// Autre ou inconnu -> Green
         protected Color ColorLink(int? flowType)
         {
+            //if (flowType == "Fichier") return Color.Yellow;
             //if (flowType == "Base à base") return Color.Red;
             //if (flowType == "Service") return Color.Black;
-            //if (flowType == "Fichier") return Color.Yellow;
-            if (flowType == 1) return Color.Red;
-            if (flowType == 2) return Color.Black;
-            if (flowType == 3) return Color.Yellow;
+            if (flowType == 1) return Color.Yellow;
+            if (flowType == 2) return Color.Red;
+            if (flowType == 3) return Color.Black;
             return Color.Green;
         }
 
