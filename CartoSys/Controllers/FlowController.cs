@@ -12,6 +12,9 @@ using LinearGradientBrush = MindFusion.Drawing.LinearGradientBrush;
 using MindFusion.Diagramming;
 using MindFusion.Diagramming.Mvc;
 using MindFusion.Diagramming.Layout;
+using System.IO;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace CartoSys.Controllers
 {
@@ -316,6 +319,56 @@ namespace CartoSys.Controllers
             if (flowType == 2) return Color.Red;
             if (flowType == 3) return Color.Black;
             return Color.Green;
+        }
+
+        public void ExportToExcel()
+        {
+            var grid = new GridView();
+
+            //This works
+            //grid.DataSource = db.Flows.ToList();
+
+                /*from d in dbContext.diners
+                              where d.user_diners.All(m => m.user_id == userID) && d.active == true */
+            var FlowList =
+                                from f in db.Flows
+                                join sa in db.Applications on f.SourceId equals sa.ID
+                                join ta in db.Applications on f.TargetId equals ta.ID
+                                join ft in db.FlowTypes on f.FlowType equals ft.ID into loft
+                                from subft in loft.DefaultIfEmpty()
+                                select new
+                                {
+                                    Id = f.ID,
+                                    Source = sa.Name,
+                                    Target = ta.Name,
+                                    FlowType = (subft == null ? String.Empty : subft.Description), 
+                                    SendingMode = f.SendingMode,
+                                    Descripton = f.Description
+                                };
+                              //from d in ClientsList
+                              //select new
+                              //{
+                              //    FirstName = d.FirstName,
+                              //    LastName = d.LastName,
+                              //    DOB = d.Dob,
+                              //    Email = d.Email
+
+                              //};
+            grid.DataSource = FlowList.ToList();
+            grid.DataBind();
+
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment; filename=Flows.xls");
+            Response.ContentType = "application/excel";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+            grid.RenderControl(htw);
+
+            Response.Write(sw.ToString());
+
+            Response.End();
+
         }
 
         protected override void Dispose(bool disposing)
