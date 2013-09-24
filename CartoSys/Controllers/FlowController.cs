@@ -27,8 +27,9 @@ namespace CartoSys.Controllers
             var flowList = from f in db.Flows
                            join sa in db.Applications on f.SourceId equals sa.ID
                            join ta in db.Applications on f.TargetId equals ta.ID
-                           join ft in db.FlowTypes on f.FlowType equals ft.ID
-                           select new FlowView() { ID = f.ID, SourceName = sa.Name, TargetName = ta.Name, Status = f.Status, FlowType = ft.Description, SendingMode = f.SendingMode, Code = f.Code, Description = f.Description };
+                           join ft in db.FlowTypes on f.FlowType equals ft.ID into loft
+                           from subft in loft.DefaultIfEmpty()
+                           select new FlowView() { ID = f.ID, SourceName = sa.Name, TargetName = ta.Name, Status = f.Status, FlowType = (subft == null ? String.Empty : subft.Description), SendingMode = f.SendingMode, Code = f.Code, Description = f.Description };
             return View(flowList.ToList());
         }
 
@@ -182,7 +183,7 @@ namespace CartoSys.Controllers
 
             //Update the mouse hover distance - does not seem to work
             //diagram.MeasureUnit = GraphicsUnit.Pixel;
-            diagram.LinkHitDistance = .5f; 
+            diagram.LinkHitDistance = 1f; 
 
             //Create theme for the diagram
             Theme theme = new Theme();
@@ -246,7 +247,7 @@ namespace CartoSys.Controllers
                 link.Pen = new MindFusion.Drawing.Pen(ColorLink(application.FlowType));
 
 
-                link.HyperLink = "http://www.google.com";
+                link.HyperLink = "/Flow/Edit/" + application.ID;
 
                 //Do not allow link to be selected
                 link.Locked = true;
@@ -270,7 +271,7 @@ namespace CartoSys.Controllers
                 link.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.Description + "</div></html>";
                 //Set link color
                 link.Pen = new MindFusion.Drawing.Pen(ColorLink(application.FlowType));
-                link.HyperLink = "http://www.google.com";
+                link.HyperLink = "/Flow/Edit/" + application.ID;
                 //Do not allow link to be selected
                 //link.Locked = true;
             }
