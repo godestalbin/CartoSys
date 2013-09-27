@@ -186,7 +186,7 @@ namespace CartoSys.Controllers
 
             //Update the mouse hover distance - does not seem to work
             //diagram.MeasureUnit = GraphicsUnit.Pixel;
-            diagram.LinkHitDistance = 1f; 
+            diagram.LinkHitDistance = 1f;
 
             //Create theme for the diagram
             Theme theme = new Theme();
@@ -216,11 +216,11 @@ namespace CartoSys.Controllers
             var toApplication = from f in db.Flows
                                 join a in db.Applications on f.TargetId equals a.ID
                                 where f.SourceId == applicationId
-                                select new { a.ID, a.Name, f.Description, f.FlowType };
+                                select new { a.ID, a.Name, flowId = f.ID, f.Description, f.FlowType };
             var fromApplication = from f in db.Flows
                                   join a in db.Applications on f.SourceId equals a.ID
                                   where f.TargetId == applicationId
-                                  select new { a.ID, a.Name, f.Description, f.FlowType };
+                                  select new { a.ID, a.Name, flowId = f.ID, f.Description, f.FlowType };
 
             //List unique des applications
             var singleApplicationList = (from ta in toApplication.Union(fromApplication)
@@ -233,7 +233,7 @@ namespace CartoSys.Controllers
                 ShapeNode appli = diagram.Factory.CreateShapeNode(new RectangleF(10, 10, 50, 20));
                 appli.Id = application.ID;
                 appli.Text = application.Name;
-                appli.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.Documentation + "</div></html>";
+                appli.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.ID + '-' + application.Documentation + "</div></html>";
                 appli.Brush = new LinearGradientBrush(Color.LightBlue, Color.White, 90);
             }
 
@@ -241,19 +241,19 @@ namespace CartoSys.Controllers
             foreach (var application in toApplication)
             {
                 DiagramLink link = diagram.Factory.CreateDiagramLink(rootApplication, diagram.FindNodeById(application.ID));
-                link.Text = application.Description.Substring(0, Math.Min(application.Description.Length, 20));
+                link.Text = application.flowId.ToString() + '-' + application.Description.Substring(0, Math.Min(application.Description.Length, 20));
                 //Add suspension mark to show flow description is truncated
                 if (application.Description.Length > 20) { link.Text = link.Text + "..."; }
-                link.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.Description + "</div></html>";
+                link.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.flowId + '-' + application.Description + "</div></html>";
 
                 //Set link color
                 link.Pen = new MindFusion.Drawing.Pen(ColorLink(application.FlowType));
 
 
-                link.HyperLink = "/Flow/Edit/" + application.ID;
+                link.HyperLink = "/Flow/Edit/" + application.flowId;
 
                 //Do not allow link to be selected
-                link.Locked = true;
+                //link.Locked = true;
 
                 //Test for dotted line
                 //link.Brush = new MindFusion.Drawing.HatchBrush(System.Drawing.Drawing2D.HatchStyle.ZigZag, Color.Yellow, Color.Red);
@@ -268,13 +268,13 @@ namespace CartoSys.Controllers
             foreach (var application in fromApplication)
             {
                 DiagramLink link = diagram.Factory.CreateDiagramLink(diagram.FindNodeById(application.ID), rootApplication);
-                link.Text = application.Description.Substring(0, Math.Min(application.Description.Length, 20));
+                link.Text = application.flowId.ToString() + '-' + application.Description.Substring(0, Math.Min(application.Description.Length, 20));
                 //Add suspension mark to show flow description is truncated
                 if (application.Description.Length > 20) { link.Text = link.Text + "..."; }
-                link.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.Description + "</div></html>";
+                link.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.flowId + '-' + application.Description + "</div></html>";
                 //Set link color
                 link.Pen = new MindFusion.Drawing.Pen(ColorLink(application.FlowType));
-                link.HyperLink = "/Flow/Edit/" + application.ID;
+                link.HyperLink = "/Flow/Edit/" + application.flowId;
                 //Do not allow link to be selected
                 //link.Locked = true;
             }
@@ -296,6 +296,7 @@ namespace CartoSys.Controllers
             diagram.ResizeToFitItems(0); //Resize diagram to make sure everything is visible
 
             view.LinkClickedScript("onLinkClicked");
+            view.Behavior = Behavior.DoNothing; //Do not allow user to modify graph
 
             ViewData["DiagramView"] = view;
             return View();

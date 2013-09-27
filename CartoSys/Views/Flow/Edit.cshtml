@@ -1,4 +1,5 @@
 ﻿@model CartoSys.Models.Flow
+@{ Layout = "~/Views/Shared/_ModalLayout.cshtml"; }
 
 @{
     ViewBag.Title = "Edit";
@@ -15,6 +16,7 @@
 
         @Html.HiddenFor(model => model.ID)
 
+        <div class ="float-left">
         <div class="editor-label">
             @Html.LabelFor(model => model.SourceId)
         </div>
@@ -23,7 +25,9 @@
             @Html.DropDownList("SourceId", ViewBag.applicationList as SelectList, "Select...")
             @Html.ValidationMessageFor(model => model.SourceId)
         </div>
+        </div>
 
+        <div class ="float-left">
         <div class="editor-label">
             @Html.LabelFor(model => model.TargetId)
         </div>
@@ -32,7 +36,9 @@
             @Html.DropDownList("TargetId", ViewBag.applicationList as SelectList, "Select...")
             @Html.ValidationMessageFor(model => model.TargetId)
         </div>
+        </div>
 
+        <div class ="" style="clear: left;">
         <div class="editor-label">
             @Html.LabelFor(model => model.Status)
         </div>
@@ -40,7 +46,10 @@
             @Html.EditorFor(model => model.Status)
             @Html.ValidationMessageFor(model => model.Status)
         </div>
+        </div>
 
+        <div style="white-space: nowrap;">
+        <div class="float-left">
         <div class="editor-label">
             @Html.LabelFor(model => model.FlowType)
         </div>
@@ -49,7 +58,9 @@
             @Html.DropDownList("FlowType", ViewBag.flowTypeList as SelectList, "Select...")
             @Html.ValidationMessageFor(model => model.FlowType)
         </div>
+        </div>
 
+        <div class="float-left">
         <div class="editor-label">
             @Html.LabelFor(model => model.SendingMode)
         </div>
@@ -57,7 +68,10 @@
             @Html.EditorFor(model => model.SendingMode)
             @Html.ValidationMessageFor(model => model.SendingMode)
         </div>
+        </div>
+        </div>
 
+        <div style="margin-top: 60px; ">
         <div class="editor-label">
             @Html.LabelFor(model => model.Code)
         </div>
@@ -65,25 +79,34 @@
             @Html.EditorFor(model => model.Code)
             @Html.ValidationMessageFor(model => model.Code)
         </div>
+        </div>
 
+        <div class="float-left">
         <div class="editor-label">
             @Html.LabelFor(model => model.Description)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
+            @Html.TextAreaFor(model => model.Description, new {rows="6", cols="5"})
             @Html.ValidationMessageFor(model => model.Description)
         </div>
+        </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
+        <div >
+            <input type="submit" value="Save"/>
+            <input type="button" value="Cancel" onclick="CloseAndRefresh();"/>
+        </div>  
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+    function CloseAndRefresh() {
+    alert('gere');
+    document.forms['__RequestVerificationToken'].submit();
+    window.close();
+     //opener.location.reload(true);
+     
+    }
+    </script>
 }

@@ -373,6 +373,7 @@
     <Content Include="Views\FlowType\Edit.cshtml" />
     <Content Include="Views\FlowType\Delete.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Shared\_ModalLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,6 +14,16 @@ body {
     padding: 0;
 }
 
+.body-modal {
+    background-color: #fff;
+    border-top: solid 0px #000;
+    color: #333;
+    font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    padding: 0;
+}
+
 a {
     color: #333;
     outline: none;
@@ -428,15 +438,15 @@ input, textarea {
     border: 1px solid #e2e2e2;
     background: #fff;
     color: #333;
-    font-size: 1.2em;
+    font-size: .85em;
     margin: 5px 0 6px 0;
     padding: 5px;
-    width: 300px;
+    width: 200px;
 }
 
 textarea {
     font-family: inherit;
-    width: 500px;
+    font-size: 1em;
 }
 
     input:focus, textarea:focus {
@@ -586,6 +596,10 @@ tr.pager td {
     padding: 0 0.25em 0 0;
 }
 
+.editor-field textarea {
+    width : 400px;
+    height : 100px;
+}
 
 /********************
 *   Mobile Styles   *

@@ -48,7 +48,8 @@
     }
 
     function onLinkClicked(sender, args) {
-        window.open(args.getLink().getHyperLink(), "LinkEdit", "menubar=no, status=no, scrollbars=no, menubar=no, width=1000, height=800");
+        //window.open(args.getLink().getHyperLink(), "LinkEdit", "menubar=no, status=no, scrollbars=no, menubar=no, width=1000, height=800");
+        window.showModalDialog(args.getLink().getHyperLink(), "LinkEdit", "dialogWidth:450px;dialogHeight:505px");
     }
     
 </script>
