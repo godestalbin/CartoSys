@@ -8,6 +8,17 @@
 
 @using (Html.BeginForm("Flow1","Flow",FormMethod.Get)){     
          <p>Application: @Html.DropDownList("SourceId", ViewBag.applicationList as SelectList, "Select..." ) 
+             Zoom: @Html.DropDownList("Zoom", new List<SelectListItem>
+
+                 {
+                    new SelectListItem{ Text="x 0.5", Value = "0.5" },
+                    new SelectListItem{ Text="x 0.75", Value = "0.75" },
+                    new SelectListItem{ Text="x 1", Value = "1", Selected = true },
+                    new SelectListItem{ Text="x 1.25", Value = "1.25" },
+                    new SelectListItem{ Text="x 1.5", Value = "1.5" },
+                    new SelectListItem{ Text="x 1.75", Value = "1.75" },
+                    new SelectListItem{ Text="x 2", Value = "2" }
+                 }) 
          </p> 
         } 
 
@@ -16,6 +27,9 @@
 <script>
     $(document).ready(function () {
         $("#SourceId").change(function () {
+            $(this).closest("form").submit();
+        });
+        $("#Zoom").change(function () {
             $(this).closest("form").submit();
         });
     });

@@ -165,8 +165,9 @@ namespace CartoSys.Controllers
         //
         // GET: /Flow/Flow1
 
-        public ActionResult Flow1(int sourceId = 1)
+        public ActionResult Flow1(int sourceId = 1, float zoom = 1)
         {
+            
             int applicationId = sourceId;
             //Appplication list
             var AppLst = new List<string>();
@@ -213,7 +214,7 @@ namespace CartoSys.Controllers
             string rootAppName = db.Applications.Find(applicationId).Name;
 
             //Create the box for the root application
-            ShapeNode rootApplication = diagram.Factory.CreateShapeNode(new RectangleF(10, 10, 50, 50));
+            ShapeNode rootApplication = diagram.Factory.CreateShapeNode(new RectangleF(10, 10, 50 * zoom, 50 * zoom));
             rootApplication.Id = applicationId;
             //appli.Shape = Shape.FromId(application.ID);
             rootApplication.Text = rootAppName;
@@ -237,7 +238,7 @@ namespace CartoSys.Controllers
             //Create applications having flows for the selected application
             foreach (var application in singleApplicationList)
             {
-                ShapeNode appli = diagram.Factory.CreateShapeNode(new RectangleF(10, 10, 50, 20));
+                ShapeNode appli = diagram.Factory.CreateShapeNode(new RectangleF(10, 10, 50 * zoom, 20 * zoom));
                 appli.Id = application.ID;
                 appli.Text = application.Name;
                 appli.ToolTip = "<html><div width='300' style='background-color: #FFFF99; font-size: small;'>" + application.ID + '-' + application.Documentation + "</div></html>";
@@ -295,7 +296,7 @@ namespace CartoSys.Controllers
             //AnnealLayout cl = new AnnealLayout(); acceptable
             //cl.Arrange(diagram);
             GridLayout gl = new GridLayout();
-            gl.GridSize = 75;
+            gl.GridSize = 75 * zoom;
             gl.Arrange(diagram);
 
             //Layout: OrthogonalRouter to set links layout
