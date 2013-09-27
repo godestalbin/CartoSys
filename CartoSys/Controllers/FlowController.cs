@@ -124,7 +124,9 @@ namespace CartoSys.Controllers
             {
                 db.Entry(flow).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                //return Redirect("../ClosePage.html");
+                return RedirectToAction("ClosePage");
             }
             return View(flow);
         }
@@ -153,6 +155,11 @@ namespace CartoSys.Controllers
             db.Flows.Remove(flow);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ClosePage()
+        {
+            return View();
         }
 
         //

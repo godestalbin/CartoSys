@@ -93,20 +93,11 @@
 
         <div >
             <input type="submit" value="Save"/>
-            <input type="button" value="Cancel" onclick="CloseAndRefresh();"/>
+            <input type="button" value="Cancel" onclick="window.close();"/>
         </div>  
     </fieldset>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-    function CloseAndRefresh() {
-    alert('gere');
-    document.forms['__RequestVerificationToken'].submit();
-    window.close();
-     //opener.location.reload(true);
-     
-    }
-    </script>
 }

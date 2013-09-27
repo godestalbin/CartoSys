@@ -316,6 +316,7 @@
     <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\MindFusion.Diagramming.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Views\Flow\ClosePage.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -374,6 +375,7 @@
     <Content Include="Views\FlowType\Delete.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Shared\_ModalLayout.cshtml" />
+    <Content Include="Views\Flow\ClosePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
